@@ -13,13 +13,12 @@ import javax.swing.JFrame;
 public class Main {
 
     public static void main(String args[]) {
-        javax.swing.JFrame frame = new javax.swing.JFrame();  // Cria frame
+        javax.swing.JFrame frame = new javax.swing.JFrame();  
         Calculadora calc = new Calculadora();
-        // Alterar as propriedades que julgar necessárias aqui!
-        frame.add(calc);  // Adiciona bean ao frame
-        frame.setSize(225,220);
+        frame.add(calc);  
+        frame.setSize(225,230);
         frame.setResizable(false);
-        frame.setVisible(true);  // Exibe o frame
+        frame.setVisible(true);  
         frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
     }
 }

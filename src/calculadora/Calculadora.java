@@ -4,10 +4,12 @@
  */
 package calculadora;
 
+import java.awt.Font;
 import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.JComponent;
+
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+
 
 /**
  *
@@ -15,22 +17,73 @@ import javax.swing.JPanel;
  */
 public class Calculadora extends javax.swing.JPanel implements java.beans.Customizer {
 
-    private final int MAX_INPUT_LENGTH = 20;
-    private final int INPUT_MODE = 0;
-    private final int RESULT_MODE = 1;
-    private final int ERROR_MODE = 2;
-    private int displayMode;
-    private boolean clearOnNextDigit, percent, calcPanelVisible;
-    private double lastNumber, valor;
-    private String lastOperator;
+    private final int TAMANHO_MAXIMO = 20;
+    private boolean limparNoProximoDigito;
+    private double ultimoNumero;
+    private String operador = "0";
     private JButton jbnButtons[];
-    private JPanel jplMaster, jplBackSpace, jplControl;
-    private Object bean;
+    private String fonte = null;
 
-    public Calculadora() {
+    
+    public Font getFonteComponentes() {
+      
+        return campoVisor.getFont();
+    }
+    
+    public void setFonteTodosComponentes(String fonte, int estilo, int tamanho) {
+        
+        Font font = new Font(fonte, estilo, tamanho);
+        for(int i = 0; i<jbnButtons.length; i++){
+            jbnButtons[i].setFont(font);
+        }
+        campoVisor.setFont(font);
+    }
+
+    private Object bean;
+    private boolean calcPanelVisible = true;
+    private String value = "0";
+    boolean alternar = true;
+   
+    
+     public Calculadora() {
         initComponents();
         defineButtons();
+    }
 
+    /**
+     * Get the value of value
+     *
+     * @return the value of value
+     */
+    public String getValue() {
+        return value = campoVisor.getText();
+    }
+
+    /**
+     * Set the value of value
+     *
+     * @param value new value of value
+     */
+    public void setValue(String value) {
+        campoVisor.setText(value);
+    }
+  
+    /**
+     * Get the value of calcPanelVisible
+     *
+     * @return the value of calcPanelVisible
+     */
+    public boolean isCalcPanelVisible() {
+        return calcPanelVisible;
+    }
+
+    /**
+     * Set the value of calcPanelVisible
+     *
+     * @param calcPanelVisible new value of calcPanelVisible
+     */
+    public void setCalcPanelVisible(boolean calcPanelVisible) {
+            setVisible(calcPanelVisible);
     }
 
     public void setObject(Object bean) {
@@ -45,99 +98,51 @@ public class Calculadora extends javax.swing.JPanel implements java.beans.Custom
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        campoVisor = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
-        jTextFieldVisor = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton0 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButtonMultiplicacao = new javax.swing.JButton();
         jButtonDivisao = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButtonMultiplicacao = new javax.swing.JButton();
         jButtonSubtracao = new javax.swing.JButton();
-        jButtonPorcentagem = new javax.swing.JButton();
         jButtonSoma = new javax.swing.JButton();
-        jButtonDecimal = new javax.swing.JButton();
         jButtonIgual = new javax.swing.JButton();
         jButtonLimpar = new javax.swing.JButton();
+        jButtonDecimal = new javax.swing.JButton();
+        jButton0 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jlbOutput = new javax.swing.JLabel();
+        botaoMinimizar = new javax.swing.JButton();
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        campoVisor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoVisorActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("7");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClicado(evt);
-            }
-        });
-
-        jButton4.setText("4");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClicado(evt);
-            }
-        });
-
-        jButton1.setText("1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClicado(evt);
-            }
-        });
-
-        jButton0.setText("0");
-        jButton0.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClicado(evt);
-            }
-        });
-
-        jButton5.setText("5");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClicado(evt);
-            }
-        });
-
-        jButton8.setText("8");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClicado(evt);
-            }
-        });
-
-        jButton2.setText("2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClicado(evt);
-            }
-        });
-
-        jButton6.setText("6");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClicado(evt);
-            }
-        });
-
-        jButton9.setText("9");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClicado(evt);
-            }
-        });
-
-        jButton3.setText("3");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClicado(evt);
-            }
-        });
-
-        jButtonMultiplicacao.setText("*");
-        jButtonMultiplicacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoClicado(evt);
             }
@@ -150,6 +155,48 @@ public class Calculadora extends javax.swing.JPanel implements java.beans.Custom
             }
         });
 
+        jButton9.setText("9");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoClicado(evt);
+            }
+        });
+
+        jButton8.setText("8");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoClicado(evt);
+            }
+        });
+
+        jButton4.setText("4");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoClicado(evt);
+            }
+        });
+
+        jButton5.setText("5");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoClicado(evt);
+            }
+        });
+
+        jButton6.setText("6");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoClicado(evt);
+            }
+        });
+
+        jButtonMultiplicacao.setText("*");
+        jButtonMultiplicacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoClicado(evt);
+            }
+        });
+
         jButtonSubtracao.setText("-");
         jButtonSubtracao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,22 +204,8 @@ public class Calculadora extends javax.swing.JPanel implements java.beans.Custom
             }
         });
 
-        jButtonPorcentagem.setText("%");
-        jButtonPorcentagem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClicado(evt);
-            }
-        });
-
         jButtonSoma.setText("+");
         jButtonSoma.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClicado(evt);
-            }
-        });
-
-        jButtonDecimal.setText(".");
-        jButtonDecimal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoClicado(evt);
             }
@@ -192,106 +225,174 @@ public class Calculadora extends javax.swing.JPanel implements java.beans.Custom
             }
         });
 
+        jButtonDecimal.setText(".");
+        jButtonDecimal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoClicado(evt);
+            }
+        });
+
+        jButton0.setText("0");
+        jButton0.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoClicado(evt);
+            }
+        });
+
+        jButton2.setText("2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoClicado(evt);
+            }
+        });
+
+        jButton1.setText("1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoClicado(evt);
+            }
+        });
+
+        jButton3.setText("3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoClicado(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(campoVisor)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonDecimal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jButton8, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jButton3)
+                                            .addComponent(jButton6)
+                                            .addComponent(jButton9)))
+                                    .addComponent(jButton0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jButtonLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonSoma)
+                            .addComponent(jButtonDivisao, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonMultiplicacao, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonSubtracao, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonIgual))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonDecimal, jButtonIgual});
+
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(campoVisor, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton7)
+                    .addComponent(jButton8)
+                    .addComponent(jButton9)
+                    .addComponent(jButtonDivisao))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5)
+                    .addComponent(jButton6)
+                    .addComponent(jButtonMultiplicacao))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3)
+                    .addComponent(jButtonSubtracao))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton0)
+                        .addComponent(jButtonDecimal))
+                    .addComponent(jButtonSoma))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonIgual)
+                    .addComponent(jButtonLimpar))
+                .addGap(3, 3, 3))
+        );
+
+        botaoMinimizar.setText("--");
+        botaoMinimizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                minimizarTela(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botaoMinimizar)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(111, 111, 111)
+                    .addComponent(jlbOutput)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(1, 1, 1)
+                .addComponent(botaoMinimizar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(87, 87, 87)
+                    .addComponent(jlbOutput)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonIgual, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jTextFieldVisor)
-                        .addGap(18, 18, 18)
-                        .addComponent(jlbOutput))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jButtonDecimal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                            .addComponent(jButton0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonPorcentagem, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jButtonDivisao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonSubtracao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonSoma, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                            .addComponent(jButtonMultiplicacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldVisor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlbOutput))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton8)
-                            .addComponent(jButton9)
-                            .addComponent(jButtonDivisao))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton5)
-                            .addComponent(jButton6)
-                            .addComponent(jButtonMultiplicacao))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3)
-                            .addComponent(jButtonSubtracao))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton0)
-                    .addComponent(jButtonPorcentagem)
-                    .addComponent(jButtonSoma)
-                    .addComponent(jButtonDecimal))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonIgual)
-                    .addComponent(jButtonLimpar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void defineButtons() {
         jbnButtons = new JButton[18];
-
-        // Criar botoes numericos
-        jButton0 = new JButton("0");
-        jButton1 = new JButton("1");
-        jButton2 = new JButton("2");
-        jButton3 = new JButton("3");
-        jButton4 = new JButton("4");
-        jButton5 = new JButton("5");
-        jButton6 = new JButton("6");
-        jButton7 = new JButton("7");
-        jButton8 = new JButton("8");
-        jButton9 = new JButton("9");
 
         jbnButtons[0] = jButton0;
         jbnButtons[1] = jButton1;
@@ -303,236 +404,232 @@ public class Calculadora extends javax.swing.JPanel implements java.beans.Custom
         jbnButtons[7] = jButton7;
         jbnButtons[8] = jButton8;
         jbnButtons[9] = jButton9;
-
-        // Criar botoes de operacao
-        jButtonDecimal = new JButton(".");
-        jButtonIgual = new JButton("=");
-        jButtonDivisao = new JButton("/");
-        jButtonMultiplicacao = new JButton("*");
-        jButtonSubtracao = new JButton("-");
-        jButtonSoma = new JButton("+");
-        jButtonPorcentagem = new JButton("%");
-        jButtonLimpar = new JButton("Limpar");
-
         jbnButtons[10] = jButtonDecimal;
         jbnButtons[11] = jButtonIgual;
         jbnButtons[12] = jButtonDivisao;
         jbnButtons[13] = jButtonMultiplicacao;
         jbnButtons[14] = jButtonSubtracao;
         jbnButtons[15] = jButtonSoma;
-        jbnButtons[16] = jButtonPorcentagem;
-        jbnButtons[17] = jButtonLimpar;
+        jbnButtons[16] = jButtonLimpar;
+        
+        
     }
 
-    public void setDisplayString(String s) {
-        jTextFieldVisor.setText(s);
+    public void setValorAtual(String s) {
+        campoVisor.setText(s);
     }
 
-    public String getDisplayString() {
-        return jTextFieldVisor.getText();
+    public String getValorAtual() {
+        return campoVisor.getText();
     }
 
-    public void addDigitToDisplay(int digit) {
-        if (clearOnNextDigit) {
-            setDisplayString("");
+    public void adicionarDigito(int digit) {
+        if (limparNoProximoDigito) {
+            setValorAtual("");
         }
 
-        String inputString = getDisplayString();
+        String campoTexto = getValorAtual();
 
-        if (inputString.indexOf("0") == 0) {
-            inputString = inputString.substring(1);
+        if (campoTexto.indexOf("0") == 0) {
+            campoTexto = campoTexto.substring(1);
         }
 
-        if ((!inputString.equals("0") || digit > 0) && inputString.length() < MAX_INPUT_LENGTH) {
-            setDisplayString(inputString + digit);
+        if ((!campoTexto.equals("0") || digit > 0) && campoTexto.length() < TAMANHO_MAXIMO) {
+            setValorAtual(campoTexto + digit);
         }
 
 
-        displayMode = INPUT_MODE;
-        clearOnNextDigit = false;
+        limparNoProximoDigito = false;
     }
 
-    public void addDecimalPoint() {
-        displayMode = INPUT_MODE;
-
-        if (clearOnNextDigit) {
-            setDisplayString("");
+    public void adicionarPontoDecimal() {
+       
+        if (limparNoProximoDigito) {
+            setValorAtual("");
         }
 
-        String inputString = getDisplayString();
+        String campoTexto = getValorAtual();
 
-        // If the input string already contains a decimal point, don't
-        //  do anything to it.
-        if (inputString.indexOf(".") < 0) {
-            setDisplayString(new String(inputString + "."));
+
+        // Se o campo de texto ja conter ponto decimal, nao faça nada
+        if (campoTexto.indexOf(".") < 0) {
+            setValorAtual(new String(campoTexto + "."));
         }
     }
 
     public void clearAll() {
-        setDisplayString("0");
-        lastOperator = "0";
-        lastNumber = 0;
-        displayMode = INPUT_MODE;
-        clearOnNextDigit = true;
+        setValorAtual("0");
+        operador = "0";
+        ultimoNumero = 0;
+        limparNoProximoDigito = true;
     }
 
-    public double getNumberInDisplay() {
-        String input = jTextFieldVisor.getText();
-        return Double.parseDouble(input);
+    public double pegarNumeroVisor() {
+        String input = campoVisor.getText();
+        
+        try{
+         return Double.parseDouble(input);
+        }catch(NumberFormatException e){
+            campoVisor.setText("0");
+        JOptionPane.showMessageDialog(null, "Exeção: Apenas números!");    
+        }
+        return 0;
+        
+    
+                
     }
 
-    public void processOperator(String op) {
-        if (displayMode != ERROR_MODE) {
-            double numberInDisplay = getNumberInDisplay();
+    public void processarOperador(String op) {
+    
+            double numeroVisor = pegarNumeroVisor();
 
-            if (!lastOperator.equals("0")) {
-                double result = processLastOperator();
-                displayResult(result);
-                lastNumber = result;
+            if (!operador.equals("0")) {
+                double result = realizarOperacao();
+                mostrarResultado(result);
+                ultimoNumero = result;
 
             } else {
-                lastNumber = numberInDisplay;
+                ultimoNumero = numeroVisor;
             }
 
-            clearOnNextDigit = true;
-            lastOperator = op;
-        }
+            limparNoProximoDigito = true;
+            operador = op;
+        
     }
 
-    public double processLastOperator() {
+    public double realizarOperacao() {
         double result = 0;
-        double numberInDisplay = getNumberInDisplay();
+        double numeroVisor = pegarNumeroVisor();
 
-        if (lastOperator.equals("/")) {
-            if (numberInDisplay == 0) {
+        if (operador.equals("/")) {
+            if (numeroVisor == 0) {
                 JOptionPane.showMessageDialog(null, "Exeção: Divisão por zero!");
             }
 
-            result = lastNumber / numberInDisplay;
+            result = ultimoNumero / numeroVisor;
         }
 
-        if (lastOperator.equals("*")) {
-            result = lastNumber * numberInDisplay;
+        if (operador.equals("*")) {
+            result = ultimoNumero * numeroVisor;
         }
 
-        if (lastOperator.equals("-")) {
-            result = lastNumber - numberInDisplay;
+        if (operador.equals("-")) {
+            result = ultimoNumero - numeroVisor;
         }
 
-        if (lastOperator.equals("+")) {
-            result = lastNumber + numberInDisplay;
+        if (operador.equals("+")) {
+            result = ultimoNumero + numeroVisor;
         }
 
         return result;
     }
 
-    void processEquals() {
-        double result = 0;
-
-        if (displayMode != ERROR_MODE) {
-            result = processLastOperator();
-            displayResult(result);
-            lastOperator = "0";
-        }
+    void processarIgual() {
+            double resultado = 0;
+            resultado = realizarOperacao();
+            mostrarResultado(resultado);
+            operador = "0";
+        
     }
 
-    public void displayResult(double result) {
-        setDisplayString(Double.toString(result));
-        lastNumber = result;
-        displayMode = RESULT_MODE;
-        clearOnNextDigit = true;
+    public void mostrarResultado(double result) {
+        setValorAtual(Double.toString(result));
+        ultimoNumero = result;
+        limparNoProximoDigito = true;
     }
 
     private void botaoClicado(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClicado
-        double result = 0;
+
         for (int i = 0; i < jbnButtons.length; i++) {
             if (evt.getSource() == jbnButtons[i]) {
                 switch (i) {
                     case 0:
-                        addDigitToDisplay(i);
+                        adicionarDigito(i);
                         break;
 
                     case 1:
-                        addDigitToDisplay(i);
+                        adicionarDigito(i);
                         break;
 
                     case 2:
-                        addDigitToDisplay(i);
+                        adicionarDigito(i);
                         break;
 
                     case 3:
-                        addDigitToDisplay(i);
+                        adicionarDigito(i);
                         break;
 
                     case 4:
-                        addDigitToDisplay(i);
+                        adicionarDigito(i);
                         break;
 
                     case 5:
-                        addDigitToDisplay(i);
+                        adicionarDigito(i);
                         break;
 
                     case 6:
-                        addDigitToDisplay(i);
+                        adicionarDigito(i);
                         break;
 
                     case 7:
-                        addDigitToDisplay(i);
+                        adicionarDigito(i);
                         break;
 
                     case 8:
-                        addDigitToDisplay(i);
+                        adicionarDigito(i);
                         break;
 
                     case 9:
-                        addDigitToDisplay(i);
+                        adicionarDigito(i);
                         break;
 
 
                     case 10:	// decimal
-                        addDecimalPoint();
+                        adicionarPontoDecimal();
                         break;
 
                     case 11:	// igual
-                        processEquals();
+                        processarIgual();
                         break;
 
                     case 12:	// divisao
-                        processOperator("/");
+                        processarOperador("/");
                         break;
 
                     case 13:	// multiplicacao
-                        processOperator("*");
+                        processarOperador("*");
                         break;
 
                     case 14:	// subtracao
-                        processOperator("-");
+                        processarOperador("-");
                         break;
 
                     case 15:	// soma
-                        processOperator("+");
+                        processarOperador("+");
                         break;
 
-                    case 16:	// %
-                        if (displayMode != ERROR_MODE) {
-                            try {
-                                result = getNumberInDisplay() / 100;
-                                displayResult(result);
-                            } catch (Exception ex) {
-                                JOptionPane.showMessageDialog(null, "Entrada inválida!");
-                                displayMode = ERROR_MODE;
-                            }
-                        }
-                        break;
-
-                    case 17:	// Limpar
+                    case 16:	// Limpar
                         clearAll();
                         break;
                 }
             }
         }
     }//GEN-LAST:event_botaoClicado
+
+    private void campoVisorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoVisorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoVisorActionPerformed
+
+    private void minimizarTela(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizarTela
+     
+       alternar = !alternar;
+       jPanel2.setVisible(alternar);
+        
+    }//GEN-LAST:event_minimizarTela
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoMinimizar;
+    private javax.swing.JTextField campoVisor;
     private javax.swing.JButton jButton0;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -548,10 +645,11 @@ public class Calculadora extends javax.swing.JPanel implements java.beans.Custom
     private javax.swing.JButton jButtonIgual;
     private javax.swing.JButton jButtonLimpar;
     private javax.swing.JButton jButtonMultiplicacao;
-    private javax.swing.JButton jButtonPorcentagem;
     private javax.swing.JButton jButtonSoma;
     private javax.swing.JButton jButtonSubtracao;
-    private javax.swing.JTextField jTextFieldVisor;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel jlbOutput;
     // End of variables declaration//GEN-END:variables
 }
