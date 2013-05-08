@@ -1,6 +1,8 @@
-Manifest-Version: 1.0
 X-COMMENT: Main-Class will be added automatically by build
 Manifest-Version: 1.0
 Name: /calculadora/Calculadora.class
 Java-Bean: True
+
+
+
 

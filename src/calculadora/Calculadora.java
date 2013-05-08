@@ -218,7 +218,7 @@ public class Calculadora extends javax.swing.JPanel implements java.beans.Custom
             }
         });
 
-        jButtonLimpar.setText("Limpar");
+        jButtonLimpar.setText("CE");
         jButtonLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoClicado(evt);
